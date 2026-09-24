@@ -1,0 +1,31 @@
+// Definición de pines
+const int pinSensor = A0; // Pin analógico A0 para el sensor
+const int pinLed = 2;     // Pin digital 2 para el LED
+
+// Variable para definir el punto de activación
+// (Ajusta este valor entre 0 y 1023 según las pruebas de tu sensor)
+const int umbral = 500;   
+
+void setup() {
+  pinMode(pinLed, OUTPUT);     // Configurar el pin del LED como salida
+  Serial.begin(9600);          // Iniciar comunicación serial para el monitor
+}
+
+void loop() {
+  // Leer el valor analógico del sensor
+  int valorSensor = analogRead(pinSensor); 
+  
+  // Imprimir el valor en el Monitor Serie para calibración
+  Serial.print("Valor del sensor: ");
+  Serial.println(valorSensor);
+
+  // Lógica de encendido: Si el valor cruza el umbral, el LED cambia
+  // (Dependiendo del sensor, es posible que debas cambiar '>' por '<')
+  if (valorSensor > umbral) {
+    digitalWrite(pinLed, HIGH);  // Encender el LED
+  } else {
+    digitalWrite(pinLed, LOW);   // Apagar el LED
+  }
+
+  delay(100); // Pequeña pausa para estabilizar las lecturas
+}
